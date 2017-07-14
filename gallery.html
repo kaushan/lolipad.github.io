@@ -1,0 +1,420 @@
+<!--
+  ## Introduction
+
+  The `amp-carousel` component works great for image galleries. The carousel requires the `height` attribute to be specified in advance. This can be tricky if the displayed images and captions vary in size. Here are two approaches to solve this problem.
+-->
+<!-- -->
+<!doctype html>
+<html ⚡>
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <!-- ## Setup -->
+  <!-- Import the carousel component in the header. -->
+  <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+  <!-- We will also be using the amp-fit-text component. -->
+  <script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+  <!-- We will also be using the amp-selector component. -->
+  <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+  <!-- We will also be using the amp-bind component. -->
+  <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+
+  <link rel="canonical" href="https://ampbyexample.com/advanced/image_galleries_with_amp-carousel/">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <style amp-custom>
+    #carousel-with-preview amp-img {
+      transition: opacity 1s ease-in-out;
+    }
+    .carousel-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-preview button {
+      height: 40px;
+      width: 60px;
+      min-width: 60px;
+      margin: 4px;
+      padding: 0;
+    }
+    .carousel-preview .amp-carousel-slide {
+      margin: 4px;
+      padding: 0;
+    }
+    .carousel-preview button:active {
+      opacity: 0.5;
+    }
+    .carousel1, .carousel2 {
+      background: #eee;
+      margin: 16px 0;
+    }
+    .carousel1 .slide > amp-img > img{
+      object-fit: contain;
+    }
+    .carousel2 .slide > amp-img > img{
+      object-fit: contain;
+    }
+    .carousel2 .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #ddd;
+      font-size: smaller;
+      max-height: 30%;
+    }
+    .selected {
+      border-width: 1px;
+      border-style: solid;
+    }
+    body {
+    width: 400px;
+    	margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div>
+
+    <amp-carousel controls type="slides" width="400" height="300"
+    [slide]="selectedSlide" on="slideChange:AMP.setState({selectedSlide: event.index})">
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19624963_246482209189207_8802020609652424704_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367214_116814085590188_1898872850505269248_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.88.1080.1080/18160880_278561842604423_8226836287269634048_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19425436_1966619623566659_733688458354098176_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c87.0.905.905/19228003_491236477893126_6871626337031815168_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18581193_820141318139029_136624103686668288_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18443839_1021214964646887_8922646737550573568_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18514030_1681131358568305_7330491795303825408_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.109.1080.1080/18013353_1914677875480513_8259067633119264768_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18514117_385848881809871_2884742396703145984_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c106.0.868.868/18443102_1732973593661676_5222419239658323968_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19120716_1681591882147871_8935615537329733632_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/18380192_1448971638507098_6002650416058204160_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19425066_805981312897418_5257946710914629632_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18879313_1920906454822471_9219047116456853504_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c219.0.642.642/19380053_250086225397513_1419615256879038464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.64.1080.1080/18950109_697546783783344_8287348223236898816_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c8.0.1064.1064/17881324_1868923520025480_1121852149274247168_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.77.1080.1080/18879750_1486741444680566_530857292065669120_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19764854_1839518962929152_6033665311205490688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19425062_446666172360841_5233305207932190720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18580659_138406720037400_1544173637790072832_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19984623_971822852956740_2925974207298797568_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19436867_293417274453870_1036443696641343488_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17438441_289895548110017_6207608802338930688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19932957_1953974458211769_8550383496596553728_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18443843_1912923032274670_7846717731519856640_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367015_1704885779815725_4268702656156925952_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19429346_470452649960698_6628770911677841408_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18888555_245469555939033_501644333267550208_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19765184_152075068676446_5738172746651664384_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18013577_1394551493916921_9069249622223880192_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17437432_101426050405189_6983212422060310528_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18888779_178064122725523_2041611870929944576_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/19429030_296033654200475_2645858325744320512_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18580727_1422552027784298_2923754533840486400_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19624270_148019662440346_398713865765912576_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19764699_1746948305323030_7812087337197764608_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19051832_1917162528507248_6598123107385344000_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17882703_878039535667971_7967016703169134592_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18160963_1845732825749340_1315261669143740416_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18298362_1592973740713941_4800289250849325056_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18888406_238987099922504_5650732194667167744_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19436883_132641210648711_331236330363158528_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19622751_1698956717067500_5334457443009167360_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18160814_788097931360222_4116433670238109696_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18160958_1430327817031299_5051259278174715904_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19533543_656646651197407_7527939314575998976_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17932494_1928326474081313_7294819347426443264_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18812437_1295597387221343_8754066462273961984_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.45.832.832/17881213_247980369008275_7499908682965057536_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367162_857798424369548_7767703140865933312_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c28.0.655.655/18013409_256425098162124_7182952818213388288_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19761330_447920538910148_5188936086935568384_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19051837_274013849732384_2902864452862869504_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094689_1446990738684469_6427454859527585792_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c88.0.904.904/17934602_760005194161696_6782400337077600256_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19050458_1304458029623770_9076535029219196928_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18445012_420675654955541_961570970584219648_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19764957_670501273140330_3772272202733322240_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18723242_1912007189081453_816369838682275840_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18380980_1479094512162287_8289877447873134592_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19425438_305544386538175_2704879182210400256_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c28.0.652.652/18298696_826967647451213_1337652166881443840_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17819369_405085303190099_5709857427428474880_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19534334_1447961178580590_3960937699296149504_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19955458_837847293048972_8602823166085038080_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18011866_433634206976710_6355686389803122688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c78.0.924.924/19931918_857933157690424_8600923029603614720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17881894_861308070700968_8063339878881951744_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18888760_308512766249633_5505029977520734208_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18514119_223719914796340_5949625806383742976_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19622981_136631046917480_8261395969250164736_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17817954_152247078636063_3763091997900931072_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17662606_1874913996125055_2684923063346135040_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18095165_416059568763570_7514742898710020096_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18252801_1530024987061767_3672006912762707968_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19050329_1192388804205432_9183985683511902208_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18512641_1828829534044212_7337745466785792_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17934002_1840154772868785_2834257134902837248_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17662999_126580571216425_6363567186639847424_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17437463_147912329071821_6263135758744289280_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c31.0.1017.1017/19624148_419054245154726_8313051661178241024_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17818174_142479196283664_6743713818590838784_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19985688_206506216543369_9176086375366131712_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18580344_1689075311400471_7621804544929824768_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18096011_648011078726096_1868778963849969664_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18380559_173208263206892_1518708884066271232_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18722258_269214543542904_488285825335820288_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/18581301_121262288450996_4513248464674488320_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18812607_1542129802477718_3026286767679471616_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18580567_686702554853152_3476617357135183872_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18809493_1322876974460084_3711904362918838272_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18299142_1399431273428829_7099556458974412800_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18444831_1542425322436405_7170710383303327744_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17817699_1001141723355645_1571856123646967808_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.89.1080.1080/18380546_1366281410076070_3588304863521406976_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19429099_215729828949465_4700631595671879680_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052104_100146447266873_6318306713900417024_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17662675_262917790835001_4714942379457511424_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18298389_259712841104122_6526804260607229952_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c82.0.915.915/17933769_1867875000120630_8823844128757383168_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18949852_1329996353794135_6092495084576571392_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17818891_1909641999282703_4227984987506343936_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18096206_281525858973793_4380158565021646848_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c101.0.877.877/19623449_145795312657216_2752065118853398528_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18514101_261437957655985_3477854883242049536_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18298948_755036438010851_3461671828722810880_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19624324_1589436651081236_8835112581048827904_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19380077_328097050944033_8883533415278706688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18095097_147438935792805_2404997487497576448_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17932235_738040599702507_1439249163001790464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c110.0.859.859/17818990_274633642948284_5332469745029480448_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c22.0.692.692/18581274_1918451111505728_7203693683437207552_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367218_440229383028683_6295747750365495296_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17818058_430146847339006_5695007251585040384_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18299544_1690860191207962_3434491686535823360_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18645171_1896117923944381_4559231234948988928_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17662649_1642786426029952_4955814822705889280_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17817712_259240144538872_6754286395986018304_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17881860_276394662807428_7101492183554850816_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c28.0.658.658/18013276_110148776217242_6327077101543358464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17934216_1209082262533900_8944687440266788864_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c93.0.893.893/19050362_383417422053509_8449830929148411904_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367822_479987159016345_3498235370644963328_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18299111_419278901788969_6927021257552560128_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17663015_399869220392177_8653971965972840448_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17932492_298948590537235_3680564806898679808_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094701_443052412712133_5460503407318007808_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18161427_1406947119342113_3292767098731757568_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18809618_301959276923723_8999687760667213824_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18581387_778540142322692_3346026007462150144_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18580707_438034809906375_573898623922733056_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c58.0.964.964/18723168_225440657956896_5406583954092326912_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17934104_1248397768606147_2873269534033182720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19761991_1363930540390196_215862281748086784_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17934297_1910402282548839_7444502144557776896_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18722671_310158492757528_7142966045622403072_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094858_799900896829302_5310610259868385280_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19954848_1275218339253250_326560932043948032_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17882775_238551566613195_446657417460056064_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18888689_1162032683901316_3578130232026071040_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c92.0.895.895/17881584_1923448997899377_6876222591988662272_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18160360_294265571012712_266462197700362240_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18948037_297550534030513_3877791002211123200_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.12.1080.1080/18812927_1416031818477345_5498912801629929472_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18161886_1950766168488956_7890507706241384448_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17495355_283474842079902_8058556479315116032_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18444996_432750373751206_8781144878160543744_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18380650_1911267932474766_7969271208812216320_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17437612_111778492704272_3057638036075446272_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17932158_1714233965540969_8721162898207932416_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18947624_1309581042488279_550685455264251904_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/c84.0.551.551/19985286_111424232835943_2941918745104220160_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.0.1080.1080/18512661_154513441752257_7476025619667484672_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19379874_485816098457610_9178828832243712000_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18252944_284411762017863_6133204910616870912_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17817665_297978207288746_7608216659974684672_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367124_1891644451110094_7746372589517275136_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18252498_253798711754415_1825837039010971648_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19533992_327687740989376_2779601004591579136_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18299814_659637860894618_6506290088052260864_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18645643_129990664233640_1340092043313020928_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19986181_1884828291839775_3488218553427951616_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.135.1080.1080/18579618_1958214557747379_797828774103089152_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18879511_291802497897542_6603394565560860672_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18645152_466033707071749_4714265677295255552_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c68.0.943.943/17495008_202242380269365_2922988204300697600_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.79.1080.1080/17494992_781453995337186_5262195661931020288_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18011234_1466512723420266_4002847607918428160_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/18012175_285452648545475_7605245380124475392_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094988_208942902928997_8972566635625840640_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/18094705_198778530630654_5511913568850673664_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19984967_1879779212344678_4628907583153897472_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/19227295_1768446553445319_6088687338370629632_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17495072_346233932445003_6770117447870578688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c176.0.727.727/19931571_1074825385984819_6742799183830319104_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17596306_273073083138543_8055789674267934720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18889140_1898489260424272_4756992273948868608_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17817680_115976118946383_5972754158028062720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18444903_101753407077419_6584320409640894464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/17881151_1339415222802640_3202126413859651584_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094657_198005684045845_7421632594757812224_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.124.1080.1080/19429282_1432402986826230_6398135638943596544_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c38.0.654.654/18298521_1398527586874788_3010314329766494208_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.36.1080.1080/18888445_290363854759364_193943075066740736_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18513871_184419948748245_4930080856137007104_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18298636_697183803801730_7820410653104930816_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18879366_1304276066360133_4486975496889827328_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c162.0.755.755/18381974_888181604654344_6166456538832568320_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18382023_1142681329175999_7885245477950586880_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17494531_1901417340147350_4710614920733917184_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18722841_1921655124785110_6672792952072306688_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17818119_1897628510452606_8370545708310200320_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17596718_1256945371069375_3805817529402654720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19228348_241225933045081_7092949184365461504_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19228135_813481488817258_4475355604604420096_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19379922_246074272551964_3405138479875620864_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17494185_1469318259806916_5048832222220517376_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18809731_2132292183664035_5740590357972779008_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17819379_414143908947158_2877049294232223744_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17596793_1888199641466140_25260437834563584_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18646637_656094904597220_2156882505322463232_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19534336_147632492464350_6759565318814695424_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19764996_183033432233950_8351659491569172480_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19428947_123851328206125_3523765047094411264_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18299318_1291675644233855_7458664790626402304_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c149.0.781.781/18251368_427075307654478_6409757876281147392_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19624769_463986517308592_4813747719849902080_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19379969_1447741585311093_6248720950850748416_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19120475_1929584440656690_5975662160125100032_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18161151_245613629239707_8139507258405945344_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18382614_121028015131897_5266437521956405248_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19761530_717936938414515_573666420810842112_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18381723_1439431572783438_5771700902041747456_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c86.0.908.908/17663334_178546102664915_5865755299935158272_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227236_1690862971209383_7733613392732094464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.77.1080.1080/18513126_1716682508624895_3226638479412690944_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18581085_151463925393686_5466780441891569664_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c72.0.936.936/18513058_422263244806431_3922847627212750848_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18879011_784888671670732_6232022135183769600_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18160826_1660872620886445_7419679539984334848_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18381723_237739216706133_2590402493997383680_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17934457_1892007141053025_8373694116906663936_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19051954_310118702767863_7147949010844647424_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18512706_665220666996851_328266180089348096_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19367037_436915050024698_4209901431433461760_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19436943_124711661452946_5373558872516591616_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052208_1358896317534050_4159840246114025472_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19933146_212703902590785_6828506677856174080_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18382535_294896614267736_9077854275668803584_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18809035_108629233062395_9211259576245026816_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227908_1726799264001656_3304684975848161280_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17882698_1912433715679846_7171434364465577984_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.79.1080.1080/18251375_349923182079923_150246726337298432_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227135_1459987774023415_7185160448583401472_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19623040_1850023295316365_1857701852351561728_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19120602_1919053521640549_7739076187405680640_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19761593_102412400378815_4658180521170305024_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19366980_467203373620154_1964070046036656128_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c112.0.833.833/18013977_1339820112754421_480801664433913856_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18011915_1881645652090888_7582673024881524736_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.7.1080.1080/19051314_223480078166156_6333685617397858304_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/c45.0.550.550/19050406_253637531784125_6703713211910193152_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19535127_1876003969392236_3240747348195803136_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/19227888_111245276152117_6855369877226520576_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227916_201514523707313_5274962340549230592_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18013866_196160424228297_1513975499393597440_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227606_1703307893298168_8136249925143887872_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19227261_122087581711568_1400266837232451584_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19932047_486204708394391_5686865771708284928_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18513597_165494697314145_2720961764559683584_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19533693_129892444265716_1414727768779784192_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18300161_1889736407908753_5819461097287057408_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/17818255_1507659685919293_3967968315946565632_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c29.0.654.654/17881550_152356258627352_5620694237075996672_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c52.0.976.976/18251895_146580872546748_8230385150026842112_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18096002_645365278988087_8002731044157521920_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c169.0.741.741/17932462_119239041957139_4482369539601858560_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18251798_1637561662923682_8803881447183089664_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/19428963_646878695515904_8179358898440896512_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18812891_1350793501669221_6172593407148425216_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19764858_1511266228937161_8410998209974894592_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19366939_1579627062049868_4016028214009790464_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.0.1080.1080/17662950_422899781394627_7735208264412954624_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/19425434_1876971415891261_5027818837026799616_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c155.0.770.770/19120628_274873426254030_5618116045517619200_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18094543_1866275126957281_4444350845579952128_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18947362_1883573911906638_3530046045922787328_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c63.0.954.954/19623080_1908098866110953_150953579169972224_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c43.0.993.993/18161229_288593298231615_8973938237726785536_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19985871_547877465336657_393879721160474624_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18809188_1686954998267387_3349827010569437184_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c72.0.935.935/18095933_1307619786022054_7848150244846993408_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19379847_1907936109454539_4222300851693158400_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/19228716_1319740231457629_6963603620021403648_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/18299497_1459318537460518_5560591302254395392_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17818520_100259890528222_1501294505372942336_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c79.0.921.921/17883138_294264131010964_3844736461454704640_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19050146_150473615496963_5405558440456093696_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17586639_1656783797957744_9031106193761763328_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18889256_136852073538190_397179024842948608_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/19367118_1801695783477025_908764085686894592_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/19761912_1341722135947283_7868540855487823872_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c201.0.677.677/19122028_243654339460667_1086935778849718272_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/c25.0.590.590/17818711_1336586853077527_3750391706592215040_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/18444233_314603745620543_5106024388986142720_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18645377_1277418812356819_8023628108751962112_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/18723264_412083122518136_7827575208310472704_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/17883229_709688779213449_8814752636474490880_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.3.1080.1080/19428652_242771816208538_3035871232013631488_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/18646366_1801686076827619_9090440428221628416_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e15/17661729_277037926041291_8757513590140829696_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c105.0.870.870/17586790_433712700307868_7427254509379780608_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c64.0.952.952/18298498_1958592814362993_2925015282835521536_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/e35/c28.0.567.567/18722480_435003860192704_6259137835681447936_n.jpg" width="400" height="300"></amp-img>
+<amp-img src="https://scontent-lga3-1.cdninstagram.com/t51.2885-15/s640x640/e15/19533848_285636921844779_6060784082604785664_n.jpg" width="400" height="300"></amp-img>
+    </amp-carousel>
+  </div>
+  <!--
+ 
+  <!-- ## Metadata
+    The Top Stories carousel requires schema.org markup for one of the following types: Article, NewsArticle, BlogPosting, or VideoObject. If your Image Gallery is also a NewsArticle, you may want to mark it up as such:
+  ```html
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      ...
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "ImageGallery",
+      "associatedMedia": [
+        {
+          "@context": "http://schema.org",
+          "@type": "ImageObject",
+          "contentUrl": "https://unsplash.it/60/40?image=1",
+          "caption": "A cute pup"
+        },
+        {,
+          "@context": "http://schema.org",
+          "@type": "ImageObject",
+          "contentUrl": "https://unsplash.it/60/40?image=2",
+          "caption": "A doubly cute pup"
+        },
+      ],
+    }
+  ]
+  </script>
+  ```
+  -->
+</body>
+</html>
